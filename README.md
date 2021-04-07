@@ -1,6 +1,7 @@
 # blackjava
- simple black-jack simulator in the CLI
-
+## simple black-jack simulator in the CLI
+---
+## File Breakdown
 ### `Exec.java`
 - This is used to perform the actions of the game with various do while-loop, all the opperations set up by the other classes.
 
@@ -13,7 +14,7 @@
 ### `DeckName.java`
 - This is used to preface the card values that appear in the player's or the dealer's hand.
 
-
+---
 ## Group Members:
 - Marcus Walker: Team Lead
 - Jaxon Albanese: Task Deligation
