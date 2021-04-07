@@ -16,6 +16,6 @@
 
 ---
 ## Group Members:
-- Marcus Walker: Team Lead
-- Jaxon Albanese: Task Deligation
-- David Handcock: Junior Software Engineer
+- Marcus Walker
+- Jaxon Albanese
+- David Handcock
