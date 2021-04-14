@@ -42,11 +42,13 @@ public class Card {
   public ArrayList<String> drawRandomCard() {
     rand = new Random();
     ArrayList<String> returns = new ArrayList<String>();
-    String selection = 
-    
-
-
-    rand.nextInt(cards.length);
+    // adding the card to the list of returns.
+    String selection = cards[rand.nextInt() * cards.length];
+    returns.add(selection);
+  
+    // adding the suit to the list of returns.
+    selection = suits[rand.nextInt() * suits.length];
+    returns.add(selection);
 
     return null;
   }

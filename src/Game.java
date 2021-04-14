@@ -11,4 +11,7 @@ public class Game {
 
   // methods
 
+  public boolean calculate()  {
+    
+  }
 }
