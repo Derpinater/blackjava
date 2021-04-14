@@ -8,28 +8,46 @@ import java.util.ArrayList;
 public class Card {
   // feilds
   private Random rand;
+  private String[] suits = {"Hearts", "Diamonds", "Spades", "Clubs"};
+  private String[] cards = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
+  private int value;
   // constructors
 
   // methods
   public void prefaceCardValues() {
-    System.out.printf("--------Prefacing the Card Values!--------%n%n");
+    System.out.printf("--------Prefacing the Card Values!--------%n");
 
     ArrayList<String> cardNames = new ArrayList<String>();
     for (CardName el : CardName.values()) {
       cardNames.add(el.toString());
     }
 
-    for (int i = 1; i < 15; i++) {
-      System.out.printf("%-2d ... %-5s ", i, cardNames.get(i - 1));
-      if (i % 2 == 0) {
+    for (int i = 1; i <= 13; i++) {
+      value = i;
+      if(value > 10 && value < 14)  {
+        value = 10;
+      }
+      if(value != 1)  {
+        System.out.printf(" %-2d ... %-5s |", value, cardNames.get(i - 1));
+      } else {
+        System.out.printf("%-2d or %-2d ... %-5s (Yes, we are using aces)\n", value, 11, cardNames.get(i - 1));
+      }
+      if (value % 3 == 0) {
         System.out.println();
       }
+      System.out.println("------------------------------------------------------");
     }
   }
 
-  public int drawRandomCard() {
+  public ArrayList<String> drawRandomCard() {
     rand = new Random();
-    return rand.nextInt(14) + 1;
+    ArrayList<String> returns = new ArrayList<String>();
+    String selection = 
+    
+
+
+    rand.nextInt(cards.length);
+
+    return null;
   }
-  
 }

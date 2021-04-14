@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * main execution of the game -> main endpoint.
@@ -8,11 +9,13 @@ import java.util.ArrayList;
 
 public class Exec {
   public static void main(String[] strings) {
-    Card cardApp = new Card();
-    // ArrayList<Integer> integers = new ArrayList<Integer>();
-    // integers.add(cardApp.drawRandomCard());
-    // System.out.print(integers);
+    Card cardObj = new Card();
+    Game gameObj = new Game();
+    Scanner input = new Scanner(System.in);
 
-    cardApp.prefaceCardValues();
+    cardObj.prefaceCardValues();
+
+    
+    input.close();
   }
 }
