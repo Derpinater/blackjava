@@ -8,8 +8,16 @@ import java.util.ArrayList;
 public class Card {
   // feilds
   private Random rand;
-  private String[] suits = {"Hearts", "Diamonds", "Spades", "Clubs"};
-  private String[] cards = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
+
+  // plan B?
+  /*
+   private String[] suits = {"Hearts", "Diamonds", "Spades", "Clubs"};
+   private String[] cards = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
+  */
+  ArrayList<String> deckDisplay = new ArrayList<String>();
+  ArrayList<String> deckValues = new ArrayList<String>();
+  ArrayList<String> deckSuits = new ArrayList<String>();
+  
   private int value;
   // constructors
 
@@ -18,7 +26,7 @@ public class Card {
     System.out.printf("--------Prefacing the Card Values!--------%n");
 
     ArrayList<String> cardNames = new ArrayList<String>();
-    for (CardName el : CardName.values()) {
+    for (CardNames el : CardNames.values()) {
       cardNames.add(el.toString());
     }
 
@@ -39,17 +47,31 @@ public class Card {
     }
   }
 
-  public ArrayList<String> drawRandomCard() {
-    rand = new Random();
-    ArrayList<String> returns = new ArrayList<String>();
-    // adding the card to the list of returns.
-    String selection = cards[rand.nextInt() * cards.length];
-    returns.add(selection);
-  
-    // adding the suit to the list of returns.
-    selection = suits[rand.nextInt() * suits.length];
-    returns.add(selection);
+  public void generateDeck(boolean shuffle)  {
+    if(shuffle) { // if it's true
+      for(int i = 0; i < 52; i++) {
+        int index = rand.nextInt(14);
+        deck
+        
+      }
+    } else  { // if it's false
+      for(int i = 0; i < deck.length; i++) {
 
-    return null;
+      }
+    }
   }
+
+  // public ArrayList<String> drawRandomCard() {
+  //   rand = new Random();
+  //   ArrayList<String> returns = new ArrayList<String>();
+  //   // adding the card to the list of returns.
+  //   String selection = cards[rand.nextInt() * cards.length];
+  //   returns.add(selection);
+  
+  //   // adding the suit to the list of returns.
+  //   selection = suits[rand.nextInt() * suits.length];
+  //   returns.add(selection);
+
+  //   return null;
+  // }
 }

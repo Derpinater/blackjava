@@ -9,12 +9,16 @@ import java.util.Scanner;
 
 public class Exec {
   public static void main(String[] strings) {
-    Card cardObj = new Card();
-    Game gameObj = new Game();
+    // Card cardObj = new Card();
+    // Game gameObj = new Game();
     Scanner input = new Scanner(System.in);
 
-    cardObj.prefaceCardValues();
-
+    // cardObj.prefaceCardValues();
+    CardNames names;
+    for(CardNames card: CardNames.values()) {
+      System.out.println(card.toString());
+    }
+    
     
     input.close();
   }
