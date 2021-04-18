@@ -1,25 +1,29 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
- * main execution of the game -> main endpoint.
+ * THINGS TODO:
+ * suits
+ * implament player and dealers hand
+ * user input (hits, stands)
+ * game rules
+ * GUI??
  */
 
-// imports
-
 public class Exec {
-  public static void main(String[] strings) {
-    // Card cardObj = new Card();
-    // Game gameObj = new Game();
-    Scanner input = new Scanner(System.in);
+  public static void main(String[] args) throws Exception {
+    Deck myDeck = new Deck(true);
+    int[] deck = myDeck.genDeck();
 
-    // cardObj.prefaceCardValues();
-    CardNames names;
-    for(CardNames card: CardNames.values()) {
-      System.out.println(card.toString());
+    for(int i = 0; i < deck.length; i++)  {
+      System.out.print(deck[i] + " ");
     }
-    
-    
-    input.close();
+    System.out.println();
+
+    ArrayList<String> display = myDeck.convertIntoString(deck);
+    System.out.print(display);
+
+    myDeck.convertCorrectValues(deck);
   }
 }
+
+

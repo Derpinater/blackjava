@@ -1,20 +1,11 @@
 /**
- * This handles the game operations, like hit, stand, split, and calculateing if you have gone over the 21 threshold.
+ * Game.java is the file that handles all of the actions that you would take in game.
+ * (i.e. calculating if your hand is over 21, hits, stands, splits(?), and winning)
  */
-
-import java.util.ArrayList;
-
 public class Game {
   // feilds
 
   // constructors
 
   // methods
-
-  public boolean calculate()  {
-    
-    
-    
-    return false;
-  }
 }
