@@ -91,9 +91,10 @@ public class Deck {
   }
 
   /**
-   * Makes another array of strings based on the @param array and returns another with all the ranks
+   * Makes another array of strings based on the array specified and returns another with all the ranks.
+   * There is also generation of a suit list that you can get in super.getSuit()
    * @param array is the array to analyze.
-   * @return the other array that is returned full of card ranks.
+   * @return the other array that is returned in full of card ranks (strings from ENUM).
    */
   public ArrayList<String> toRealCards(int[] array)  {
     _displayDeck = new ArrayList<String>();
@@ -101,6 +102,7 @@ public class Deck {
       _displayDeck.add(String.valueOf(array[i]));
     }
 
+    // holy motherload of converting numbers into a string from an enum
     for(int i = 0; i < array.length; i++) {
       switch(array[i])  {
         case 1:
@@ -145,6 +147,7 @@ public class Deck {
       }
     }
 
+    // suits
     _displaySuitDeck = new ArrayList<String>();
     for(int i = 0; i < array.length; i++) {
       _displaySuitDeck.add(String.valueOf(_suitDeck.get(i)));

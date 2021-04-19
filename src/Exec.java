@@ -21,6 +21,7 @@ public class Exec {
     System.out.println("Drawn Card " + myDeck.drawCard(deck, playerHand) + " of " + myDeck.getSuit());
 
     System.out.println(playerHand);
+    System.out.println("And now we are done!");
   }
 }
 
