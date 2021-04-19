@@ -17,7 +17,7 @@ public class Deck {
   private ArrayList<Integer> _deck = new ArrayList<Integer>();
   private ArrayList<String> _displayDeck;
   private ArrayList<Integer> _suitDeck = new ArrayList<Integer>();
-  private ArrayList<Integer> _displaySuitDeck = new ArrayList<Integer>();
+  private ArrayList<String> _displaySuitDeck;
 
   private boolean _doShuffle;
   private int selection = 0;
@@ -95,7 +95,7 @@ public class Deck {
    * @param array is the array to analyze.
    * @return the other array that is returned full of card ranks.
    */
-  public ArrayList<String> toCardRanks(int[] array)  {
+  public ArrayList<String> toRealCards(int[] array)  {
     _displayDeck = new ArrayList<String>();
     for(int i = 0; i < array.length; i++) {
       _displayDeck.add(String.valueOf(array[i]));
@@ -144,9 +144,36 @@ public class Deck {
           break;
       }
     }
+
+    _displaySuitDeck = new ArrayList<String>();
+    for(int i = 0; i < array.length; i++) {
+      _displaySuitDeck.add(String.valueOf(_suitDeck.get(i)));
+    }
+    
+    for(int i = 0; i < _suitDeck.size(); i++)  {
+      switch(_suitDeck.get(i))  {
+        case 0:
+          _displaySuitDeck.set(i, SuitNames.CLUBS.toString());
+          break;
+        case 1:
+          _displaySuitDeck.set(i, SuitNames.DAIMONDS.toString());
+          break;
+        case 2:
+          _displaySuitDeck.set(i, SuitNames.HEARTS.toString());
+          break;
+        case 3:
+          _displaySuitDeck.set(i, SuitNames.SPADES.toString());
+          break;
+        default:
+          _displaySuitDeck.set(i, "undefined");
+          break;
+      }
+    }
+    
     // System.out.println(array.length);
     return this._displayDeck;
   }
+
 
   /**
    * This needs to happen BEFORE convertToString so it doesn't mess with the String assignments.
@@ -166,9 +193,17 @@ public class Deck {
    * @param array in which the next element is taken.
    * @return the next element of the array.
    */
-  public int drawCard(int[] array) {
+  public String drawCard(int[] array, ArrayList<Integer> toArray) {
     this.selection++;
-    return (array[this.selection - 1]);
+    toArray.add(array[this.selection - 1]);
+    return (this._displayDeck.get(this.selection - 1));
+  }
+
+  /**
+   * Gets the immediately drawn card's suit. Ususally used for GUI stuff.
+   */
+  public String getSuit() {
+    return (this._displaySuitDeck.get(selection - 1));
   }
 
   /**

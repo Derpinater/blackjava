@@ -1,14 +1,5 @@
 import java.util.ArrayList;
 
-/**
- * THINGS TODO:
- * suits
- * implament player and dealers hand
- * user input (hits, stands)
- * game rules
- * GUI??
- */
-
 public class Exec {
   public static void main(String[] args) throws Exception {
     Deck myDeck = new Deck(true);
@@ -19,13 +10,17 @@ public class Exec {
     }
     System.out.println();
 
-    ArrayList<String> display = myDeck.toCardRanks(deck);
+    ArrayList<String> display = myDeck.toRealCards(deck);
     System.out.print(display);
 
+    ArrayList<Integer> playerHand = new ArrayList<Integer>();
+
     myDeck.toBlackjackValues(deck);
-    System.out.println("Drawn Card " + myDeck.drawCard(deck)); 
-    System.out.println("Drawn Card " + myDeck.drawCard(deck)); 
-    System.out.println("Drawn Card " + myDeck.drawCard(deck)); 
+    System.out.println("\nDrawn Card " + myDeck.drawCard(deck, playerHand) + " of " + myDeck.getSuit()); 
+    System.out.println("Drawn Card " + myDeck.drawCard(deck, playerHand) + " of " + myDeck.getSuit()); 
+    System.out.println("Drawn Card " + myDeck.drawCard(deck, playerHand) + " of " + myDeck.getSuit());
+
+    System.out.println(playerHand);
   }
 }
 

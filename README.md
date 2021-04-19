@@ -25,11 +25,12 @@ public enum SuitNames {
 ```
 
 ## Things to do:
-- SuitNames
+- ~~SuitNames~~
 - implament player and dealers hand
 - user input (hits, stands)
 - game rules
 - GUI??
+- Optimization (only if we want to hehe)
 
 ---
 ## Group Members:
