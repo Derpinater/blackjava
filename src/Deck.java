@@ -13,8 +13,11 @@ public class Deck {
   // feilds
   private Random rand;
 
+  // deck arrays.
   private ArrayList<Integer> _deck = new ArrayList<Integer>();
   private ArrayList<String> _displayDeck;
+  private ArrayList<Integer> _suitDeck = new ArrayList<Integer>();
+  private ArrayList<Integer> _displaySuitDeck = new ArrayList<Integer>();
 
   private boolean _doShuffle;
   private int selection = 0;
@@ -34,18 +37,27 @@ public class Deck {
    * @return
    */
   public int[] genDeck() throws Exception {
+    // gen the _deck
     for(int i = 0; i < 4; i++) {
       for(int j = 1; j <= 13; j++)  {
         _deck.add(j);
       }
     }
 
+    // converting the _deck into a int[]
     int[] deck = new int[_deck.size()];
     for(int i = 0; i < _deck.size(); i++) {
       deck[i] = _deck.get(i);
     }
 
-    // shuffle
+    // suit deck assignments
+    for(int i = 0; i < 13; i++) {
+      for(int j = 0; j < 4; j++)  {
+        _suitDeck.add(j);
+      }
+    }
+
+    // shuffling only if specified in the constructor
     if(_doShuffle == true)  {
 
       Random rand = ThreadLocalRandom.current();
@@ -61,6 +73,7 @@ public class Deck {
   
     return deck;
   }
+
   /**
    * Simple Fisher-Yates algorithm to randomize the pre-set @param array
    * @param array
@@ -82,7 +95,7 @@ public class Deck {
    * @param array is the array to analyze.
    * @return the other array that is returned full of card ranks.
    */
-  public ArrayList<String> convertIntoString(int[] array)  {
+  public ArrayList<String> toCardRanks(int[] array)  {
     _displayDeck = new ArrayList<String>();
     for(int i = 0; i < array.length; i++) {
       _displayDeck.add(String.valueOf(array[i]));
@@ -140,7 +153,7 @@ public class Deck {
    * CAUTION: OVERWRITES THE ARRAY SPECIFIED
    * @param array is the array in which you want to make all values above 10 go to 10
    */
-  public int[] convertCorrectValues(int[] array) {
+  public int[] toBlackjackValues(int[] array) {
     for(int i = 0; i < array.length; i++) {
       if(array[i] >= 11)  {
         array[i] = 10;

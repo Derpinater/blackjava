@@ -19,10 +19,13 @@ public class Exec {
     }
     System.out.println();
 
-    ArrayList<String> display = myDeck.convertIntoString(deck);
+    ArrayList<String> display = myDeck.toCardRanks(deck);
     System.out.print(display);
 
-    myDeck.convertCorrectValues(deck);
+    myDeck.toBlackjackValues(deck);
+    System.out.println("Drawn Card " + myDeck.drawCard(deck)); 
+    System.out.println("Drawn Card " + myDeck.drawCard(deck)); 
+    System.out.println("Drawn Card " + myDeck.drawCard(deck)); 
   }
 }
 
