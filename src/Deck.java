@@ -36,7 +36,7 @@ public class Deck {
    * Makes a deck of 52 with 4 of each card. 
    * @return
    */
-  public int[] genDeck() throws Exception {
+  public ArrayList<Integer> genDeck() throws Exception {
     // gen the _deck
     for(int i = 0; i < 4; i++) {
       for(int j = 1; j <= 13; j++)  {
@@ -45,10 +45,10 @@ public class Deck {
     }
 
     // converting the _deck into a int[]
-    int[] deck = new int[_deck.size()];
-    for(int i = 0; i < _deck.size(); i++) {
-      deck[i] = _deck.get(i);
-    }
+    // int[] deck = new int[_deck.size()];
+    // for(int i = 0; i < _deck.size(); i++) {
+    //   deck[i] = _deck.get(i);
+    // }
 
     // suit deck assignments
     for(int i = 0; i < 13; i++) {
@@ -61,33 +61,41 @@ public class Deck {
     if(_doShuffle == true)  {
 
       Random rand = ThreadLocalRandom.current();
-      for(int i = deck.length - 1; i > 0; i--) {
+      for(int i = this._deck.size() - 1; i > 0; i--) {
         int index = rand.nextInt(i + 1);
   
         // simple swap
-        int a = deck[index];
-        deck[index] = deck[i];
-        deck[i] = a;
+        int a = this._deck.get(index);
+        this._deck.set(index, this._deck.get(i));
+        _deck.set(i, a);
+
+        // int a = deck[index];
+        // deck[index] = deck[i];
+        // deck[i] = a;
       }
     }
   
-    return deck;
+    return _deck;
   }
 
   /**
    * Simple Fisher-Yates algorithm to randomize the pre-set @param array
    * @param array
    */
-  public void shuffleArray(int[] array) {
+  public void shuffleArray(ArrayList<Integer> array) {
     Random rand = ThreadLocalRandom.current();
-    for(int i = array.length - 1; i > 0; i--) {
-      int index = rand.nextInt(i + 1);
+      for(int i = array.size() - 1; i > 0; i--) {
+        int index = rand.nextInt(i + 1);
+  
+        // simple swap
+        int a = array.get(index);
+        array.set(index, array.get(i));
+        array.set(i, a);
 
-      // simple swap
-      int a = array[index];
-      array[index] = array[i];
-      array[i] = a;
-    }
+        // int a = deck[index];
+        // deck[index] = deck[i];
+        // deck[i] = a;
+      }
   }
 
   /**
@@ -96,15 +104,15 @@ public class Deck {
    * @param array is the array to analyze.
    * @return the other array that is returned in full of card ranks (strings from ENUM).
    */
-  public ArrayList<String> toRealCards(int[] array)  {
+  public ArrayList<String> toRealCards(ArrayList<Integer> array)  {
     _displayDeck = new ArrayList<String>();
-    for(int i = 0; i < array.length; i++) {
-      _displayDeck.add(String.valueOf(array[i]));
+    for(int i = 0; i < array.size(); i++) {
+      _displayDeck.add(String.valueOf(array.get(i)));
     }
 
     // holy motherload of converting numbers into a string from an enum
-    for(int i = 0; i < array.length; i++) {
-      switch(array[i])  {
+    for(int i = 0; i < array.size(); i++) {
+      switch(array.get(i))  {
         case 1:
           _displayDeck.set(i, CardNames.ACE.toString());
           break;
@@ -149,23 +157,23 @@ public class Deck {
 
     // suits
     _displaySuitDeck = new ArrayList<String>();
-    for(int i = 0; i < array.length; i++) {
+    for(int i = 0; i < array.size(); i++) {
       _displaySuitDeck.add(String.valueOf(_suitDeck.get(i)));
     }
     
     for(int i = 0; i < _suitDeck.size(); i++)  {
       switch(_suitDeck.get(i))  {
         case 0:
-          _displaySuitDeck.set(i, SuitNames.CLUBS.toString());
+          _displaySuitDeck.set(i, SuitNames.SPADES.toString() + " \u2660");
           break;
-        case 1:
-          _displaySuitDeck.set(i, SuitNames.DAIMONDS.toString());
+          case 1:
+          _displaySuitDeck.set(i, SuitNames.CLUBS.toString() + " \u2663");
           break;
-        case 2:
-          _displaySuitDeck.set(i, SuitNames.HEARTS.toString());
+          case 2:
+          _displaySuitDeck.set(i, SuitNames.HEARTS.toString() + " \u2665");
           break;
-        case 3:
-          _displaySuitDeck.set(i, SuitNames.SPADES.toString());
+          case 3:
+          _displaySuitDeck.set(i, SuitNames.DAIMONDS.toString() + " \u2666");
           break;
         default:
           _displaySuitDeck.set(i, "undefined");
@@ -183,10 +191,11 @@ public class Deck {
    * CAUTION: OVERWRITES THE ARRAY SPECIFIED
    * @param array is the array in which you want to make all values above 10 go to 10
    */
-  public int[] toBlackjackValues(int[] array) {
-    for(int i = 0; i < array.length; i++) {
-      if(array[i] >= 11)  {
-        array[i] = 10;
+  public ArrayList<Integer> toBlackjackValues(ArrayList<Integer> array) {
+    for(int i = 0; i < array.size(); i++) {
+      if(array.get(i) >= 11)  {
+        array.set(i, 10);
+        // array[i] = 10;
       }
     }
     return array;
@@ -196,9 +205,9 @@ public class Deck {
    * @param array in which the next element is taken.
    * @return the next element of the array.
    */
-  public String drawCard(int[] array, ArrayList<Integer> toArray) {
+  public String drawCard(ArrayList<Integer> array, ArrayList<Integer> toArray) {
     this.selection++;
-    toArray.add(array[this.selection - 1]);
+    toArray.add(array.get(this.selection - 1));
     return (this._displayDeck.get(this.selection - 1));
   }
 
