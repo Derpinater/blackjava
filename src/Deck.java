@@ -23,6 +23,7 @@ public class Deck {
     // System.out.print(this._deckSuits);
     this._stringRanks = new ArrayList<String>(this._deckRanks.size());
     this._stringSuits = new ArrayList<String>(this._deckSuits.size());
+    makeStringLists();
     getBlackjackValues(_deckRanks);
   }
 
@@ -72,7 +73,7 @@ public class Deck {
    * Makes the _stringRanks into a list based on the generated _deckRanks
    * @param _dealerHand
    */
-  public void makeStringLists(ArrayList<Integer> _dealerHand) {
+  public void makeStringLists() {
 
     // making the list as long as the deck
     for(int i = 0; i < _deckRanks.size(); i++)  {

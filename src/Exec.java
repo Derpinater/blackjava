@@ -18,7 +18,13 @@ public class Exec {
         game = new Game();
         System.out.println(game._dealerHand);
         System.out.println(game._playerHand);
-        event = 0;
+
+        int didWin = game.hit(game._playerHand);
+        System.out.println(game._playerHand);
+        if(didWin == 0) {
+          System.out.println("YOU LOOSE!");
+        }
+
 
         
 

@@ -57,7 +57,7 @@ public class Game {
       returns = 1;
     }
 
-    System.out.print(returns);
+    // System.out.print(returns);
     return returns;
   }
 
