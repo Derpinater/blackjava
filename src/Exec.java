@@ -13,17 +13,35 @@ public class Exec {
     
     System.out.print("Would you like to play?\n1 = Yes, 0 = No: ");
     int event = input.nextInt();
+    input.nextLine();
     switch(event) {
       case 1:
         game = new Game();
         System.out.println(game._dealerHand);
         System.out.println(game._playerHand);
-
-        int didWin = game.hit(game._playerHand);
-        System.out.println(game._playerHand);
-        if(didWin == 0) {
-          System.out.println("YOU LOOSE!");
-        }
+        do {
+          System.out.print("1 = Hit, 0 = Stand: ");
+          event = input.nextInt();
+          input.nextLine();
+          switch (event) {
+            case 0:
+              System.out.println(game._dealerHand);
+              System.out.println(game._playerHand);
+              //Call for dealer code here
+              System.out.println("dealer's turn");
+              break;
+            case 1:
+              int didWin = game.hit(game._playerHand);
+              System.out.println(game._playerHand);
+              if(didWin == 0) {
+                System.out.println("YOU LOOSE!");
+                event = 0;
+              }
+              break;
+            default:
+              System.out.println("Invalid input");
+          }
+        } while (event != 0);
 
 
         
