@@ -12,10 +12,10 @@
 ### `Deck.java`
 - This is used to perform the opperations of handling a deck. i.e -> Shuffle, prefacing the card values-- as mentioned in `CardName.java`.
 
-### `CardName.java`
+### `CardRanks.java`
 - This is used to preface the card values that appear in the player's or the dealer's hand.
 
-### `SuitNames.java`
+### `CardSuits.java`
 - This is used to make cards with a certain suit.
 <!-- SuitNames preview -->
 ```java
@@ -26,11 +26,11 @@ public enum SuitNames {
 
 ## Things to do:
 - ~~SuitNames~~
-- implament player and dealers hand
-- user input (hits, stands)
-- game rules
+- ~~implament player and dealers hand~~
+- ~~user input (hits, stands)~~
+- game rules (half way there)
 - GUI??
-- Optimization (only if we want to hehe)
+- ~~Optimization (only if we want to hehe)~~
 
 ---
 ## Group Members:
