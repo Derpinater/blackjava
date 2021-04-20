@@ -1,3 +1,3 @@
-public enum SuitNames {
+public enum CardSuits {
   DAIMONDS, CLUBS, SPADES, HEARTS
 }

@@ -1,227 +1,245 @@
-/**
- * Deck.java
- * ----------------------------------------------------------------
- * This is the file that handles all actions that you do with a deck.
- * (i.e. generating the deck, shuffling the deck, ect.)
- */
-
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Deck {
   // feilds
-  private Random rand;
 
-  // deck arrays.
-  private ArrayList<Integer> _deck = new ArrayList<Integer>();
-  private ArrayList<String> _displayDeck;
-  private ArrayList<Integer> _suitDeck = new ArrayList<Integer>();
-  private ArrayList<String> _displaySuitDeck;
+  // values to the deck
+  private ArrayList<Integer> _deckRanks = new ArrayList<Integer>();
+  public ArrayList<Integer> _deckSuits = new ArrayList<Integer>();
+  // blackjack values will be stored here
+  public ArrayList<Integer> _bjDeck = new ArrayList<Integer>();
 
-  private boolean _doShuffle;
-  private int selection = 0;
-  
+  // user friendly lists of the deck
+  public ArrayList<String> _stringRanks;
+  public ArrayList<String> _stringSuits;
+
+  public String _immediateStringRank;
+  public String _immediateStringSuit;
+
   // constructors
-  /**
-   * Main constructor for Deck.java
-   * @param doShuffle specifies whether you would like to shuffle in genDeck()
-   */
-  public Deck(boolean doShuffle)  {
-    this._doShuffle = doShuffle;
+  public Deck() {
+    makeDeck();
+    // System.out.print(this._deckSuits);
+    this._stringRanks = new ArrayList<String>(this._deckRanks.size());
+    this._stringSuits = new ArrayList<String>(this._deckSuits.size());
+    getBlackjackValues(_deckRanks);
   }
 
   // methods
+
   /**
-   * Makes a deck of 52 with 4 of each card. 
-   * @return
+   * Used to generate the values of the deck.
    */
-  public ArrayList<Integer> genDeck() throws Exception {
-    // gen the _deck
-    for(int i = 0; i < 4; i++) {
+  public void makeDeck() {
+
+    // getting the card values
+    for(int i = 0; i < 4; i++)  {
       for(int j = 1; j <= 13; j++)  {
-        _deck.add(j);
+        this._deckRanks.add(j);
       }
     }
+    
+    // shuffling the card rank values
+    Random rand = new Random();
+    for(int i = this._deckRanks.size() - 1; i > 0; i--)  {
+      int index = rand.nextInt(i + 1);
 
-    // converting the _deck into a int[]
-    // int[] deck = new int[_deck.size()];
-    // for(int i = 0; i < _deck.size(); i++) {
-    //   deck[i] = _deck.get(i);
-    // }
-
-    // suit deck assignments
+      int a = this._deckRanks.get(index);
+      this._deckRanks.set(index, this._deckRanks.get(i));
+      this._deckRanks.set(i, a);
+    }
+    
+    // getting the card suits
     for(int i = 0; i < 13; i++) {
       for(int j = 0; j < 4; j++)  {
-        _suitDeck.add(j);
+        this._deckSuits.add(j);
       }
     }
 
-    // shuffling only if specified in the constructor
-    if(_doShuffle == true)  {
+    // shuffling the card suits the same way
+    for(int i = this._deckSuits.size() - 1; i > 0; i--)  {
+      int index = rand.nextInt(i + 1);
 
-      Random rand = ThreadLocalRandom.current();
-      for(int i = this._deck.size() - 1; i > 0; i--) {
-        int index = rand.nextInt(i + 1);
-  
-        // simple swap
-        int a = this._deck.get(index);
-        this._deck.set(index, this._deck.get(i));
-        _deck.set(i, a);
-
-        // int a = deck[index];
-        // deck[index] = deck[i];
-        // deck[i] = a;
-      }
+      int a = this._deckSuits.get(index);
+      this._deckSuits.set(index, this._deckSuits.get(i));
+      this._deckSuits.set(i, a);
     }
-  
-    return _deck;
+
   }
 
   /**
-   * Simple Fisher-Yates algorithm to randomize the pre-set @param array
-   * @param array
+   * Makes the _stringRanks into a list based on the generated _deckRanks
+   * @param _dealerHand
    */
-  public void shuffleArray(ArrayList<Integer> array) {
-    Random rand = ThreadLocalRandom.current();
-      for(int i = array.size() - 1; i > 0; i--) {
-        int index = rand.nextInt(i + 1);
-  
-        // simple swap
-        int a = array.get(index);
-        array.set(index, array.get(i));
-        array.set(i, a);
+  public void makeStringLists(ArrayList<Integer> _dealerHand) {
 
-        // int a = deck[index];
-        // deck[index] = deck[i];
-        // deck[i] = a;
-      }
-  }
-
-  /**
-   * Makes another array of strings based on the array specified and returns another with all the ranks.
-   * There is also generation of a suit list that you can get in super.getSuit()
-   * @param array is the array to analyze.
-   * @return the other array that is returned in full of card ranks (strings from ENUM).
-   */
-  public ArrayList<String> toRealCards(ArrayList<Integer> array)  {
-    _displayDeck = new ArrayList<String>();
-    for(int i = 0; i < array.size(); i++) {
-      _displayDeck.add(String.valueOf(array.get(i)));
+    // making the list as long as the deck
+    for(int i = 0; i < _deckRanks.size(); i++)  {
+      _stringRanks.add("undefined");
     }
 
-    // holy motherload of converting numbers into a string from an enum
-    for(int i = 0; i < array.size(); i++) {
-      switch(array.get(i))  {
+    // takes the index and checks what value it is and sets it to the correct name.
+    for(int i = 0; i < this._deckRanks.size(); i++) {
+      switch(this._deckRanks.get(i))  {
         case 1:
-          _displayDeck.set(i, CardNames.ACE.toString());
+          _stringRanks.set(i, CardRanks.ACE.toString());
           break;
         case 2:
-          _displayDeck.set(i, CardNames.TWO.toString());
+          _stringRanks.set(i, CardRanks.TWO.toString());
           break;
         case 3:
-          _displayDeck.set(i, CardNames.THREE.toString());
+          _stringRanks.set(i, CardRanks.THREE.toString());
           break;
         case 4:
-          _displayDeck.set(i, CardNames.FOUR.toString());
+          _stringRanks.set(i, CardRanks.FOUR.toString());
           break;
         case 5:
-          _displayDeck.set(i, CardNames.FIVE.toString());
+          _stringRanks.set(i, CardRanks.FIVE.toString());
           break;
         case 6:
-          _displayDeck.set(i, CardNames.SIX.toString());
+          _stringRanks.set(i, CardRanks.SIX.toString());
           break;
         case 7:
-          _displayDeck.set(i, CardNames.SEVEN.toString());
+          _stringRanks.set(i, CardRanks.SEVEN.toString());
           break;
         case 8:
-          _displayDeck.set(i, CardNames.EIGHT.toString());
+          _stringRanks.set(i, CardRanks.EIGHT.toString());
           break;
         case 9:
-          _displayDeck.set(i, CardNames.NINE.toString());
+          _stringRanks.set(i, CardRanks.NINE.toString());
           break;
         case 10:
-          _displayDeck.set(i, CardNames.TEN.toString());
+          _stringRanks.set(i, CardRanks.TEN.toString());
           break;
         case 11:
-          _displayDeck.set(i, CardNames.JACK.toString());
+          _stringRanks.set(i, CardRanks.JACK.toString());
           break;
         case 12:
-          _displayDeck.set(i, CardNames.QUEEN.toString());
+          _stringRanks.set(i, CardRanks.QUEEN.toString());
           break;
         case 13:
-          _displayDeck.set(i, CardNames.KING.toString());
+          _stringRanks.set(i, CardRanks.KING.toString());
           break;
-      }
+      } // end switch
+
+    } // end for
+
+    for(int i = 0; i < _deckSuits.size(); i++)  {
+      _stringSuits.add("undefined");
     }
 
-    // suits
-    _displaySuitDeck = new ArrayList<String>();
-    for(int i = 0; i < array.size(); i++) {
-      _displaySuitDeck.add(String.valueOf(_suitDeck.get(i)));
-    }
-    
-    for(int i = 0; i < _suitDeck.size(); i++)  {
-      switch(_suitDeck.get(i))  {
+    for(int i = 0; i < this._deckSuits.size(); i++)  {
+      switch(this._deckSuits.get(i))  {
         case 0:
-          _displaySuitDeck.set(i, SuitNames.SPADES.toString() + " \u2660");
+          this._stringSuits.set(i, CardSuits.SPADES.toString() + " \u2660");
           break;
-          case 1:
-          _displaySuitDeck.set(i, SuitNames.CLUBS.toString() + " \u2663");
+        case 1:
+          this._stringSuits.set(i, CardSuits.CLUBS.toString() + " \u2663");
           break;
-          case 2:
-          _displaySuitDeck.set(i, SuitNames.HEARTS.toString() + " \u2665");
+        case 2:
+          this._stringSuits.set(i, CardSuits.HEARTS.toString() + " \u2665");
           break;
-          case 3:
-          _displaySuitDeck.set(i, SuitNames.DAIMONDS.toString() + " \u2666");
+        case 3:
+          this._stringSuits.set(i, CardSuits.DAIMONDS.toString() + " \u2666");
           break;
         default:
-          _displaySuitDeck.set(i, "undefined");
+          this._stringSuits.set(i, "undefined");
           break;
+      } // end switch
+
+    } // end for
+
+  } // end makeStringLists
+
+  public ArrayList<Integer> getBlackjackValues(ArrayList<Integer> deck)  {
+    for(int i = 0; i < this._deckRanks.size(); i++) {
+      if(this._deckRanks.get(i) >= 11)  {
+        this._bjDeck.add(10);
+      } else  {
+        this._bjDeck.add(this._deckRanks.get(i));
       }
     }
+
+    return this._bjDeck;
+  }
+
+  public int drawCard(ArrayList<Integer> deck) {
+    // store the first int in the deck and remove it
+    int x = deck.get(0);
+    deck.remove(0);
+
+    // get and remove first element of ui ranks
+    this._immediateStringRank = _stringRanks.get(0);
+    _stringRanks.remove(0);
+
+    // get and remove first element of ui suits
+    this._immediateStringSuit= _stringSuits.get(0);
+    _stringSuits.remove(0);
+
+    // return x -> the value
+    return x;
+  }
+
+  public String getImmediateStringRank()  {
+    return this._immediateStringRank;
+  }
+
+  public String getImmediateStringSuit()  {
+    return this._immediateStringSuit;
+  }
+
+  // @Override
+  // public ArrayList<String> toString(ArrayList<Integer> tArrayList) {
+  //   ArrayList<String> returnList = new ArrayList<String>();
     
-    // System.out.println(array.length);
-    return this._displayDeck;
-  }
+  //   for(int i = 0; i < tArrayList.size(); i++) {
+  //     returnList.add("0");
+  //     switch(tArrayList.get(i))  {
+  //       case 1:
+  //         returnList.set(i, CardRanks.ACE.toString());
+  //         break;
+  //       case 2:
+  //         returnList.set(i, CardRanks.TWO.toString());
+  //         break;
+  //       case 3:
+  //         returnList.set(i, CardRanks.THREE.toString());
+  //         break;
+  //       case 4:
+  //         returnList.set(i, CardRanks.FOUR.toString());
+  //         break;
+  //       case 5:
+  //         returnList.set(i, CardRanks.FIVE.toString());
+  //         break;
+  //       case 6:
+  //         returnList.set(i, CardRanks.SIX.toString());
+  //         break;
+  //       case 7:
+  //         returnList.set(i, CardRanks.SEVEN.toString());
+  //         break;
+  //       case 8:
+  //         returnList.set(i, CardRanks.EIGHT.toString());
+  //         break;
+  //       case 9:
+  //         returnList.set(i, CardRanks.NINE.toString());
+  //         break;
+  //       case 10:
+  //         returnList.set(i, CardRanks.TEN.toString());
+  //         break;
+  //       case 11:
+  //         returnList.set(i, CardRanks.JACK.toString());
+  //         break;
+  //       case 12:
+  //         returnList.set(i, CardRanks.QUEEN.toString());
+  //         break;
+  //       case 13:
+  //         returnList.set(i, CardRanks.KING.toString());
+  //         break;
+  //     } // end switch
 
+  //   } // end for
 
-  /**
-   * This needs to happen BEFORE convertToString so it doesn't mess with the String assignments.
-   * CAUTION: OVERWRITES THE ARRAY SPECIFIED
-   * @param array is the array in which you want to make all values above 10 go to 10
-   */
-  public ArrayList<Integer> toBlackjackValues(ArrayList<Integer> array) {
-    for(int i = 0; i < array.size(); i++) {
-      if(array.get(i) >= 11)  {
-        array.set(i, 10);
-        // array[i] = 10;
-      }
-    }
-    return array;
-  }
-  /**
-   * 
-   * @param array in which the next element is taken.
-   * @return the next element of the array.
-   */
-  public String drawCard(ArrayList<Integer> array, ArrayList<Integer> toArray) {
-    this.selection++;
-    toArray.add(array.get(this.selection - 1));
-    return (this._displayDeck.get(this.selection - 1));
-  }
+  //   return returnList;
+  // }
 
-  /**
-   * Gets the immediately drawn card's suit. Ususally used for GUI stuff.
-   */
-  public String getSuit() {
-    return (this._displaySuitDeck.get(selection - 1));
-  }
-
-  /**
-   * @return the immediately previous selected card
-   */
-  public String getDrawnCard() {
-    return this._displayDeck.get(selection);
-  }
 }
