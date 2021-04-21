@@ -27,9 +27,16 @@ public class Game {
   public void dealHands()  {
     deckActions = new Deck();
     this._playerHand.add(this.deckActions.drawCard(this.deckActions._bjDeck));
+
+    if (_playerHand.get(0) == 1) {
+      _playerHand.set(0, 11);
+    }
+
     this._playerHand.add(this.deckActions.drawCard(this.deckActions._bjDeck));
     
-    // System.out.println("Player Hand: " + this._playerHand);
+    if (_playerHand.get(1) == 1 && _playerHand.get(0) != 11) {
+      _playerHand.set(1, 11);
+    }
 
     this._dealerHand.add(this.deckActions.drawCard(this.deckActions._bjDeck));
 
@@ -50,7 +57,22 @@ public class Game {
     
     int returns;
     if(result > threshhold) {
-      returns = 0;
+      result = 0;
+      for(int i = 0; i < targetList.size(); i++)  {
+        if (targetList.get(i) == 11) {
+          targetList.set(i, 1);
+        }
+      }
+      for(int i = 0; i < targetList.size(); i++)  {
+        result += targetList.get(i);
+      }
+      if (result > threshhold) {
+        returns = 0;
+      } else if(result == threshhold) {
+        returns = 2;
+      } else  {
+        returns = 1;
+      }
     } else if(result == threshhold) {
       returns = 2;
     } else  {
@@ -106,6 +128,9 @@ public class Game {
    */
   public int hit(ArrayList<Integer> targetList)  {
     targetList.add(this.deckActions.drawCard(this.deckActions._bjDeck));
+    if (targetList.get(targetList.size()-1) == 1) {
+      targetList.set(targetList.size()-1, 11);
+    }
     return checkThreshhold(targetList);
   }
 
@@ -118,6 +143,13 @@ public class Game {
     return sums(targetList);
   }
 
+  public int calc(ArrayList<Integer> hand) {
+    int result = 0;
+    for (int el : hand) {
+      result += el;
+    }
+    return result;
+  }
 
   // dealer decisions
   public int dealer() {
